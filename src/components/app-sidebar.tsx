@@ -39,7 +39,7 @@ export function AppSidebar() {
       console.log('createNewTree 3')
       toast.success(`Created "${id}" (unsaved)`)
       console.log('navigate', id)
-      navigate({ to: `/${id}` })
+      navigate({ to: `/prolly-tree/$id`, params: { id } })
     } catch (err: any) {
       toast.error(`New tree failed: ${err.message ?? 'Unknown'}`)
     } finally {
@@ -77,18 +77,26 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
-        <div className="flex gap-2 flex-wrap justify-center sm:justify-end">
+        {/* HEADER */}
+        <div className="flex gap-2 flex-wrap items-center">
+          <div className="flex items-center gap-2 mr-auto">
+            <TreeDeciduous className="h-8 w-8 text-muted-foreground" />
+            <h1 className="text-3xl font-light tracking-tight text-muted-foreground">
+              PBT
+            </h1>
+          </div>
           <Button
             size="sm"
             onClick={createNewTree}
             disabled={working === 'create'}
+            variant="ghost"
+            title="New Tree"
           >
             {working === 'create' ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : (
-              <PlusCircle className="mr-2 h-4 w-4" />
+              <PlusCircle className="mr-2 h-4 w-4 text-green-500" />
             )}
-            New Tree
           </Button>
 
           <Label htmlFor="file-upload" className="cursor-pointer">
@@ -97,6 +105,8 @@ export function AppSidebar() {
               size="sm"
               variant="outline"
               disabled={working === 'load'}
+              variant="ghost"
+              title="Import"
             >
               <span>
                 {working === 'load' ? (
@@ -104,7 +114,6 @@ export function AppSidebar() {
                 ) : (
                   <FileUp className="mr-2 h-4 w-4" />
                 )}
-                Load Tree
               </span>
             </Button>
           </Label>
