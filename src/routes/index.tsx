@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import logo from '../logo.svg'
-import { ArrowUpLeft, ArrowUpRight } from 'lucide-react'
+import { ArrowUpLeft } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
   component: App,
