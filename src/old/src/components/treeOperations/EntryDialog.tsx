@@ -1,29 +1,27 @@
-import type { ProllyTree } from "@/useProllyStore";
+import type { ProllyTree } from '@/useProllyStore'
 
-import { useMutation } from "@tanstack/react-query";
-import { useProllyStore } from "@/useProllyStore";
-import { Button } from "../ui/button";
+import { useMutation } from '@tanstack/react-query'
+import { useProllyStore } from '@/useProllyStore'
+import { Button } from '../ui/button'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
-import { useEffect, useRef, useState } from "react";
-import { Input } from "../ui/input";
-import { toU8, u8ToString } from "@/lib/prollyUtils";
-import { toast } from "sonner";
-import { CirclePlus, Key } from "lucide-react";
-import { Textarea } from "../ui/textarea";
+} from '../ui/dialog'
+import { useEffect, useRef, useState } from 'react'
+import { Input } from '../ui/input'
+import { toU8, u8ToString } from '@/lib/prollyUtils'
+import { toast } from 'sonner'
+import { Key } from 'lucide-react'
+import { Textarea } from '../ui/textarea'
 
 export interface EntryDialogProps {
-  prly: ProllyTree | null;
-  entryKey: string | null;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  prly: ProllyTree | null
+  entryKey: string | null
+  open: boolean
+  onOpenChange: (open: boolean) => void
 }
 
 export function EntryDialog({
@@ -32,115 +30,115 @@ export function EntryDialog({
   open,
   onOpenChange,
 }: EntryDialogProps) {
-  const [newKey, setNewKey] = useState<string | undefined>("");
-  const [value, setValue] = useState<string | undefined>("");
+  const [newKey, setNewKey] = useState<string | undefined>('')
+  const [value, setValue] = useState<string | undefined>('')
 
-  const hasNewKey = newKey !== entryKey;
+  const hasNewKey = newKey !== entryKey
 
-  const isOpenRef = useRef(open);
+  const isOpenRef = useRef(open)
   useEffect(() => {
     async function fetchValue() {
       if (open && !isOpenRef.current) {
-        setNewKey(entryKey ?? "");
-        setValue(u8ToString(await prly?.tree.get(toU8(entryKey ?? ""))));
+        setNewKey(entryKey ?? '')
+        setValue(u8ToString(await prly?.tree.get(toU8(entryKey ?? ''))))
       }
-      isOpenRef.current = open;
+      isOpenRef.current = open
     }
-    fetchValue();
-  }, [open, entryKey, prly]);
+    fetchValue()
+  }, [open, entryKey, prly])
 
   const { mutate: updateEntry, isPending } = useMutation({
     mutationFn: async (entry: {
-      key: string;
-      value: string;
-      newKey?: string;
+      key: string
+      value: string
+      newKey?: string
     }) => {
-      let insertEntry = { key: entry.key, value: entry.value };
+      let insertEntry = { key: entry.key, value: entry.value }
 
-      console.log("updating entry", entry);
+      console.log('updating entry', entry)
 
-      const isMove = entry.newKey !== undefined && entry.newKey !== entry.key;
+      const isMove = entry.newKey !== undefined && entry.newKey !== entry.key
       if (isMove) {
         // Verify that the key is not already in the tree
-        const existingEntry = await prly?.tree.get(toU8(entry.newKey!));
+        const existingEntry = await prly?.tree.get(toU8(entry.newKey!))
         if (existingEntry) {
-          throw new Error("Key already in tree");
+          throw new Error('Key already in tree')
         }
-        insertEntry = { key: entry.newKey!, value: entry.value };
+        insertEntry = { key: entry.newKey!, value: entry.value }
       }
 
       // Add the new entry
-      await prly?.tree.insert(toU8(insertEntry.key), toU8(insertEntry.value));
+      await prly?.tree.insert(toU8(insertEntry.key), toU8(insertEntry.value))
 
       if (isMove) {
-        console.log("moving entry", entry.key, entry.newKey);
+        console.log('moving entry', entry.key, entry.newKey)
         // Remove the old entry
-        await prly?.tree.delete(toU8(entry.key));
+        await prly?.tree.delete(toU8(entry.key))
       }
     },
     onSuccess: () => {
-      onOpenChange(false);
-      toast.success("Entry updated");
-      useProllyStore.getState().treeUpdated(prly?.path ?? "");
+      onOpenChange(false)
+      toast.success('Entry updated')
+      useProllyStore.getState().treeUpdated(prly?.path ?? '')
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(error.message)
     },
-  });
+  })
 
   const { mutate: cloneEntry, isPending: isCloning } = useMutation({
     mutationFn: async (entry: { key: string; newKey: string }) => {
-      const sourceEntry = await prly?.tree.get(toU8(entry.key));
+      const sourceEntry = await prly?.tree.get(toU8(entry.key))
       if (!sourceEntry) {
-        throw new Error("Entry not found");
+        throw new Error('Entry not found')
       }
       // Verify that the key is not already in the tree
-      const existingEntry = await prly?.tree.get(toU8(entry.newKey));
+      const existingEntry = await prly?.tree.get(toU8(entry.newKey))
       if (existingEntry) {
-        throw new Error("Key already in tree");
+        throw new Error('Key already in tree')
       }
 
-      console.log("cloning entry", entry.newKey, sourceEntry);
-      await prly?.tree.insert(toU8(entry.newKey), sourceEntry);
+      console.log('cloning entry', entry.newKey, sourceEntry)
+      await prly?.tree.insert(toU8(entry.newKey), sourceEntry)
     },
     onSuccess: () => {
-      toast.success("Entry cloned");
-      useProllyStore.getState().treeUpdated(prly?.path ?? "");
+      toast.success('Entry cloned')
+      useProllyStore.getState().treeUpdated(prly?.path ?? '')
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(error.message)
     },
-  });
+  })
 
-  const { mutate: deleteEntry, isPending: isDeleting } = useMutation({
+  const { mutate: deleteEntry } = useMutation({
     mutationFn: async (entry: { key: string }) => {
-      await prly?.tree.delete(toU8(entry.key));
+      await prly?.tree.delete(toU8(entry.key))
     },
     onSuccess: () => {
-      toast.success("Entry deleted");
-      onOpenChange(false);
-      useProllyStore.getState().treeUpdated(prly?.path ?? "");
+      toast.success('Entry deleted')
+      onOpenChange(false)
+      useProllyStore.getState().treeUpdated(prly?.path ?? '')
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(error.message)
     },
-  });
+  })
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log("updating entry", newKey, value);
-    updateEntry({ key: entryKey!, value: value!, newKey: newKey! });
-  };
+    event.preventDefault()
+    console.log('updating entry', newKey, value)
+    updateEntry({ key: entryKey!, value: value!, newKey: newKey! })
+  }
 
   const handleClone = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    cloneEntry({ key: entryKey!, newKey: newKey! });
-  };
+    e.preventDefault()
+    cloneEntry({ key: entryKey!, newKey: newKey! })
+  }
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    deleteEntry({ key: entryKey! });
-  };
+    e.preventDefault()
+    deleteEntry({ key: entryKey! })
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -188,11 +186,11 @@ export function EntryDialog({
               </Button>
             )}
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Updating..." : "Update"}
+              {isPending ? 'Updating...' : 'Update'}
             </Button>
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

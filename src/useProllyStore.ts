@@ -227,6 +227,7 @@ export const useProllyStore = create<ProllyStoreState>()((set, get) => {
       }))
     },
 
+    // TODO: Implement
     renameTree: async (treePath: string, newName: string) => {
       throw new Error('Not implemented')
     },

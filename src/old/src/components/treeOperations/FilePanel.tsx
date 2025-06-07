@@ -1,23 +1,13 @@
-// packages/web/src/components/treeOperations/JsonlFileLoader.tsx
-import { type TreeConfigOptions, type PTree } from 'prolly-gunna'
-import { Button } from '@/components/ui/button'
-import { Loader2, Trash, FileDown } from 'lucide-react'
-import { toast } from 'sonner'
-import { useProllyStore } from '@/useProllyStore'
-import { triggerBrowserDownload } from '@/lib/prollyUtils'
-import { useMutation } from '@tanstack/react-query'
+import { type TreeConfigOptions } from 'prolly-gunna'
+
 import { TreeInfoPanel } from './TreeInfoPanel'
 
 interface JsonlFileLoaderProps {
-  tree: PTree
-  treePath: string
   treeConfig: TreeConfigOptions | null
   rootHash: string | null
 }
 
 export const ProllyFilePanel: React.FC<JsonlFileLoaderProps> = ({
-  tree,
-  treePath,
   treeConfig,
   rootHash,
 }) => {
