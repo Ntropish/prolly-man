@@ -445,22 +445,6 @@ export const ScanEntries: React.FC<ScanEntriesProps> = ({
             style={{ position: 'relative', borderCollapse: 'collapse' }}
             className="h-full overflow-auto"
           >
-            {/* <TableHeader className="z-[1] bg-background shadow-sm">
-              <TableRow className="flex">
-                <TableHead
-                  style={{ flex: `0 0 ${keyColumnWidth}px` }}
-                  className="text-xs px-3 py-2 h-auto z-[1] bg-background shadow-sm"
-                >
-                  Key
-                </TableHead>
-                <TableHead
-                  style={{ flex: `1 1 0` }}
-                  className="text-xs px-3 py-2 h-auto  z-[2] bg-background shadow-sm "
-                >
-                  Value
-                </TableHead>
-              </TableRow>
-            </TableHeader> */}
             <div
               style={{
                 height: rowVirtualizer.getTotalSize(),
@@ -485,7 +469,7 @@ export const ScanEntries: React.FC<ScanEntriesProps> = ({
                       transform: `translateY(${virtualRow.start}px)`,
                     }}
                     className={cn(
-                      'flex',
+                      'flex cursor-pointer',
                       virtualRow.index % 2 === 0
                         ? 'hover:bg-muted/20'
                         : 'bg-muted/10 dark:bg-black/10 hover:bg-muted/30',
