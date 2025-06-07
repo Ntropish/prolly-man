@@ -9,6 +9,9 @@ import { routeTree } from './routeTree.gen'
 
 import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
+import { AppSidebar } from './components/app-sidebar.tsx'
+import { SidebarProvider } from './old/src/components/ui/sidebar.tsx'
+import { ThemeProvider } from './components/theme-provider.tsx'
 
 // Create a new router instance
 const router = createRouter({
@@ -36,7 +39,9 @@ if (rootElement && !rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <TanStackQueryProvider.Provider>
-        <RouterProvider router={router} />
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
       </TanStackQueryProvider.Provider>
     </StrictMode>,
   )

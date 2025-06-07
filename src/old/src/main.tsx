@@ -1,20 +1,20 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.tsx";
-import init from "prolly-wasm";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.tsx'
+import init from 'prolly-gunna'
+import { BrowserRouter, Route, Routes } from 'react-router'
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "./components/app-sidebar.tsx";
-import { ThemeProvider } from "./components/theme-provider.tsx";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import { AppSidebar } from './components/app-sidebar.tsx'
+import { ThemeProvider } from './components/theme-provider.tsx'
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient()
 
-init();
+init()
 
-createRoot(document.getElementById("root")!).render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
@@ -32,5 +32,5 @@ createRoot(document.getElementById("root")!).render(
         </ThemeProvider>
       </QueryClientProvider>
     </BrowserRouter>
-  </StrictMode>
-);
+  </StrictMode>,
+)

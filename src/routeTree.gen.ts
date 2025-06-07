@@ -12,14 +12,22 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as ProllyTreeIndexImport } from './routes/prolly-tree/index'
 import { Route as DemoTanstackQueryImport } from './routes/demo.tanstack-query'
 import { Route as DemoTableImport } from './routes/demo.table'
+import { Route as ProllyTreeIdIndexImport } from './routes/prolly-tree/$id/index'
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProllyTreeIndexRoute = ProllyTreeIndexImport.update({
+  id: '/prolly-tree/',
+  path: '/prolly-tree/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -32,6 +40,12 @@ const DemoTanstackQueryRoute = DemoTanstackQueryImport.update({
 const DemoTableRoute = DemoTableImport.update({
   id: '/demo/table',
   path: '/demo/table',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProllyTreeIdIndexRoute = ProllyTreeIdIndexImport.update({
+  id: '/prolly-tree/$id/',
+  path: '/prolly-tree/$id/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,6 +74,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoTanstackQueryImport
       parentRoute: typeof rootRoute
     }
+    '/prolly-tree/': {
+      id: '/prolly-tree/'
+      path: '/prolly-tree'
+      fullPath: '/prolly-tree'
+      preLoaderRoute: typeof ProllyTreeIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/prolly-tree/$id/': {
+      id: '/prolly-tree/$id/'
+      path: '/prolly-tree/$id'
+      fullPath: '/prolly-tree/$id'
+      preLoaderRoute: typeof ProllyTreeIdIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -69,12 +97,16 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/prolly-tree': typeof ProllyTreeIndexRoute
+  '/prolly-tree/$id': typeof ProllyTreeIdIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/prolly-tree': typeof ProllyTreeIndexRoute
+  '/prolly-tree/$id': typeof ProllyTreeIdIndexRoute
 }
 
 export interface FileRoutesById {
@@ -82,14 +114,32 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/prolly-tree/': typeof ProllyTreeIndexRoute
+  '/prolly-tree/$id/': typeof ProllyTreeIdIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo/table' | '/demo/tanstack-query'
+  fullPaths:
+    | '/'
+    | '/demo/table'
+    | '/demo/tanstack-query'
+    | '/prolly-tree'
+    | '/prolly-tree/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo/table' | '/demo/tanstack-query'
-  id: '__root__' | '/' | '/demo/table' | '/demo/tanstack-query'
+  to:
+    | '/'
+    | '/demo/table'
+    | '/demo/tanstack-query'
+    | '/prolly-tree'
+    | '/prolly-tree/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/demo/table'
+    | '/demo/tanstack-query'
+    | '/prolly-tree/'
+    | '/prolly-tree/$id/'
   fileRoutesById: FileRoutesById
 }
 
@@ -97,12 +147,16 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DemoTableRoute: typeof DemoTableRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  ProllyTreeIndexRoute: typeof ProllyTreeIndexRoute
+  ProllyTreeIdIndexRoute: typeof ProllyTreeIdIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DemoTableRoute: DemoTableRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  ProllyTreeIndexRoute: ProllyTreeIndexRoute,
+  ProllyTreeIdIndexRoute: ProllyTreeIdIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -117,7 +171,9 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/demo/table",
-        "/demo/tanstack-query"
+        "/demo/tanstack-query",
+        "/prolly-tree/",
+        "/prolly-tree/$id/"
       ]
     },
     "/": {
@@ -128,6 +184,12 @@ export const routeTree = rootRoute
     },
     "/demo/tanstack-query": {
       "filePath": "demo.tanstack-query.tsx"
+    },
+    "/prolly-tree/": {
+      "filePath": "prolly-tree/index.tsx"
+    },
+    "/prolly-tree/$id/": {
+      "filePath": "prolly-tree/$id/index.tsx"
     }
   }
 }

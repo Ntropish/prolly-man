@@ -25,7 +25,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import type { ScanArgsWasm } from '@/lib/types'
 
 import { useDebounce } from 'use-debounce'
-import { getPrefixScanEndBound } from '@/lib/utils/getPrefixScanEndBound'
+import { getPrefixScanEndBound } from '@/lib/getPrefixScanEndBound'
 import { Tabs, TabsList, TabsTrigger } from '@radix-ui/react-tabs'
 import { useDownloadScanMutation } from './hooks/useDownloadScanMutation'
 
@@ -38,11 +38,7 @@ import {
   TableCell,
 } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
-import {
-  useProllyStore,
-  type ProllyTree,
-  type ProllyTree,
-} from '@/useProllyStore'
+import { useProllyStore, type ProllyTree } from '@/useProllyStore'
 import { EntryDialog } from './EntryDialog'
 // --- Interfaces ---
 interface Item {
@@ -229,7 +225,7 @@ export const ScanEntries: React.FC<ScanEntriesProps> = ({
 
   const rowVirtualizer = useVirtualizer({
     count: filteredTotalItems ?? 0,
-    getScrollElement: () => tableScrollRef.current,
+    getScrollElement: () => parentRef.current,
     estimateSize: () => ITEM_HEIGHT, // Provided by prop, used as an estimate
     overscan: 5,
     // No paddingStartIndex or paddingEndIndex needed if we manually apply padding

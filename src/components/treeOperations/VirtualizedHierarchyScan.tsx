@@ -5,11 +5,11 @@ import { useInfiniteQuery, type InfiniteData } from '@tanstack/react-query'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import {
   type PTree,
-  type WasmHierarchyItem,
+  type HierarchyItem,
   type HierarchyScanOptions as HierarchyScanArgsWasm,
 } from 'prolly-gunna'
 import { u8ToString, toU8 } from '@/lib/prollyUtils' //
-import u8ToHex from '@/utils/u8ToHex' //
+import u8ToHex from '@/lib/u8ToHex' //
 
 import {
   Loader2,
@@ -34,14 +34,14 @@ type HierarchyQuery_QueryKey = readonly [
 
 interface DisplayHierarchyItem {
   id: string
-  type: WasmHierarchyItem['type']
-  data: WasmHierarchyItem
+  type: HierarchyItem['type']
+  data: HierarchyItem
   formatted: Partial<Record<string, string | undefined>> // Adjusted for u8ToHex potentially returning undefined/string
   level?: number
 }
 
 interface HierarchyScanPageResult {
-  items: WasmHierarchyItem[]
+  items: HierarchyItem[]
   hasNextPage: boolean
   nextPageCursorToken?: string | null
 }
@@ -55,7 +55,7 @@ interface VirtualizedHierarchyScanProps {
 }
 
 const processHierarchyItem = (
-  item: WasmHierarchyItem,
+  item: HierarchyItem,
   index: number,
 ): DisplayHierarchyItem => {
   const formatted: DisplayHierarchyItem['formatted'] = {}

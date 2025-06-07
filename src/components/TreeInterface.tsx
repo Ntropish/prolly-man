@@ -17,7 +17,7 @@ import { Loader2, FileDown, RefreshCw, Save, Trash } from 'lucide-react'
 import { BasicOpsComponent } from './treeOperations/BasicOps'
 // DataExplorerComponent was marked as .old, assuming it's not primary for this refactor
 // import { DataExplorerComponent } from "./treeOperations/DataExplorer.old";
-import { AdvancedOpsComponent, DiffComponent } from './treeOperations/Diff'
+import { DiffComponent } from './treeOperations/Diff'
 import { ScanEntries } from './treeOperations/ScanEntries'
 import { VirtualizedHierarchyScan } from './treeOperations/VirtualizedHierarchyScan'
 import { JsonlBatchArea } from './treeOperations/JsonlBatchArea'
@@ -29,7 +29,6 @@ import { GarbageCollectionComponent } from './treeOperations/GarbageCollection'
 import { ProllyFilePanel } from './treeOperations/FilePanel'
 import TreeManagement from './tree-management'
 import { AddEntryDialog } from './treeOperations/AddEntryDialog'
-import { TestComponent } from './test-component'
 // import { RenameDialog } from "./treeOperations/RenameDialog";
 
 interface TreeInterfaceProps {
@@ -93,10 +92,6 @@ export function TreeInterface({ treeState }: TreeInterfaceProps) {
 
           <TabsContent value="management" className="pt-4">
             <TreeManagement treeState={treeState} />
-          </TabsContent>
-
-          <TabsContent value="test" className="pt-4">
-            <TestComponent />
           </TabsContent>
         </Tabs>
       </CardContent>

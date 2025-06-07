@@ -1,20 +1,34 @@
-import { defineConfig } from "vite";
-import viteReact from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from 'vite'
+import viteReact from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 
-import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
-import { resolve } from "node:path";
+import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
+import { resolve } from 'node:path'
+import wasm from 'vite-plugin-wasm'
+import topLevelAwait from 'vite-plugin-top-level-await'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [TanStackRouterVite({ autoCodeSplitting: true }), viteReact(), tailwindcss()],
+  plugins: [
+    wasm(),
+    topLevelAwait(),
+    TanStackRouterVite({ autoCodeSplitting: true }),
+    viteReact(),
+    tailwindcss(),
+  ],
+  server: {
+    mimeTypes: {
+      'text/plain': ['prly'],
+      'application/wasm': ['wasm'],
+    },
+  },
   test: {
     globals: true,
-    environment: "jsdom",
+    environment: 'jsdom',
   },
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
     },
-  }
-});
+  },
+})

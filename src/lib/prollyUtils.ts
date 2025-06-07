@@ -1,5 +1,16 @@
 // src/lib/prollyUtils.ts
 
+import { uniqueNamesGenerator } from 'unique-names-generator'
+import { animals, adjectives } from 'unique-names-generator'
+
+export const generateTreeFilename = () => {
+  return uniqueNamesGenerator({
+    dictionaries: [adjectives, animals],
+    separator: '-',
+    length: 2,
+  })
+}
+
 export const FILE_SIGNATURE = 'PRLYTRE1' // 8 bytes
 export const FILE_VERSION = 0x01 // 1 byte
 

@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import { PTree, type TreeConfigOptions } from 'prolly-gunna'
 import { u8ToHex } from '@/lib/prollyUtils'
-import { uuidv7 } from 'uuidv7'
 import { produce } from 'immer'
 import { adjectives, colors } from 'unique-names-generator'
 import { uniqueNamesGenerator } from 'unique-names-generator'
@@ -181,6 +180,7 @@ export const useProllyStore = create<ProllyStoreState>()((set, get) => {
       options?: Partial<Pick<ProllyTree, 'treeConfig' | 'path' | 'tree'>>,
     ) => {
       const tree = options?.tree ?? new PTree()
+
       const cfg = options?.treeConfig ?? (await tree.getTreeConfig())
       const root = await tree.getRootHash()
       const path =

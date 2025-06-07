@@ -8,7 +8,6 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
 import { useProllyStore } from '@/useProllyStore'
-import { Link, useLocation, useNavigate } from 'react-router'
 import { Button } from './ui/button'
 import { useRef, type ChangeEvent } from 'react'
 import { useState } from 'react'
@@ -19,21 +18,28 @@ import { Label } from '@radix-ui/react-label'
 import { Loader2, FileUp, TreeDeciduous } from 'lucide-react'
 import { Input } from './ui/input'
 import { TreeMenu } from './tree-menu'
+import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 
 export function AppSidebar() {
   const trees = useProllyStore((s) => s.trees)
-  const location = useLocation()
+  const pathname = useLocation({
+    select: (location) => location.pathname,
+  })
   const navigate = useNavigate()
 
   const [working, setWorking] = useState<'create' | 'load' | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   async function createNewTree() {
+    console.log('createNewTree')
     setWorking('create')
     try {
+      console.log('createNewTree 2')
       const id = await useProllyStore.getState().createNewTree()
+      console.log('createNewTree 3')
       toast.success(`Created "${id}" (unsaved)`)
-      navigate(`/${id}`)
+      console.log('navigate', id)
+      navigate({ to: `/${id}` })
     } catch (err: any) {
       toast.error(`New tree failed: ${err.message ?? 'Unknown'}`)
     } finally {
@@ -54,7 +60,7 @@ export function AppSidebar() {
       })
 
       toast.success(`Loaded "${file.name}"`)
-      navigate(`/${id}`)
+      navigate({ to: `/${id}` })
     } catch (err: any) {
       toast.error(`Load failed: ${err.message ?? 'Unknown'}`)
     } finally {
@@ -120,11 +126,12 @@ export function AppSidebar() {
             .map(([id, tree]) => (
               <SidebarMenuItem key={id}>
                 <div className="flex flex-row">
-                  <SidebarMenuButton
-                    asChild
-                    isActive={location.pathname === `/${id}`}
-                  >
-                    <Link to={`/${tree.path}`} className="flex justify-between">
+                  <SidebarMenuButton asChild isActive={pathname === `/${id}`}>
+                    <Link
+                      to={`/prolly-tree/$id`}
+                      params={{ id }}
+                      className="flex justify-between"
+                    >
                       <span className="text-xs text-overflow-ellipsis overflow-hidden font-mono">
                         {tree.path.replace(/\.prly$/, '')}
                       </span>
