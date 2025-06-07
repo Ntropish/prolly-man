@@ -13,6 +13,7 @@ import { ThemeProvider } from './components/theme-provider.tsx'
 
 // Create a new router instance
 const router = createRouter({
+  basepath: '/prolly-man/',
   routeTree,
   context: {
     ...TanStackQueryProvider.getContext(),

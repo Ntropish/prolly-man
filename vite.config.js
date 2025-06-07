@@ -16,12 +16,6 @@ export default defineConfig({
     viteReact(),
     tailwindcss(),
   ],
-  server: {
-    mimeTypes: {
-      'text/plain': ['prly'],
-      'application/wasm': ['wasm'],
-    },
-  },
   test: {
     globals: true,
     environment: 'jsdom',
@@ -31,4 +25,5 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
+  base: '/prolly-man/',
 })
