@@ -66,10 +66,9 @@ export function TreeInterface({ treeState }: TreeInterfaceProps) {
           defaultValue={defaultTab}
           className="w-full min-h-0 flex flex-col"
         >
-          <TabsList className="grid w-full grid-cols-3 mb-2 grid-rows-1 h-8 ">
+          <TabsList className="grid w-full grid-cols-2 mb-2 grid-rows-1 h-8 ">
             <TabsTrigger value="scan">Scan</TabsTrigger>
             <TabsTrigger value="management">Management</TabsTrigger>
-            <TabsTrigger value="test">Test</TabsTrigger>
           </TabsList>
 
           <TabsContent
