@@ -225,10 +225,9 @@ export const ScanEntries: React.FC<ScanEntriesProps> = ({
 
   const rowVirtualizer = useVirtualizer({
     count: filteredTotalItems ?? 0,
-    getScrollElement: () => parentRef.current,
+    getScrollElement: () => tableScrollRef.current,
     estimateSize: () => ITEM_HEIGHT, // Provided by prop, used as an estimate
-    overscan: 5,
-    // No paddingStartIndex or paddingEndIndex needed if we manually apply padding
+    overscan: 10,
   })
 
   const virtualItems = rowVirtualizer.getVirtualItems()
@@ -441,12 +440,12 @@ export const ScanEntries: React.FC<ScanEntriesProps> = ({
               Loading...
             </div>
           )}
-          <Table
+          <div
             ref={tableScrollRef}
             style={{ position: 'relative', borderCollapse: 'collapse' }}
             className="h-full overflow-auto"
           >
-            <TableHeader className="z-[1] bg-background shadow-sm">
+            {/* <TableHeader className="z-[1] bg-background shadow-sm">
               <TableRow className="flex">
                 <TableHead
                   style={{ flex: `0 0 ${keyColumnWidth}px` }}
@@ -461,20 +460,18 @@ export const ScanEntries: React.FC<ScanEntriesProps> = ({
                   Value
                 </TableHead>
               </TableRow>
-            </TableHeader>
-            <TableBody
+            </TableHeader> */}
+            <div
               style={{
                 height: rowVirtualizer.getTotalSize(),
-                paddingTop: `${paddingTop}px`,
-                paddingBottom: `${paddingBottom}px`,
                 width: '100%',
                 position: 'relative',
               }}
             >
-              {virtualItems.map((virtualRow) => {
+              {rowVirtualizer.getVirtualItems().map((virtualRow) => {
                 const item = allDisplayItems[virtualRow.index]
                 return (
-                  <TableRow
+                  <div
                     data-row-key={item?.key}
                     key={virtualRow.key}
                     ref={rowVirtualizer.measureElement}
@@ -484,7 +481,7 @@ export const ScanEntries: React.FC<ScanEntriesProps> = ({
                       top: 0,
                       left: 0,
                       width: '100%',
-                      height: `${ITEM_HEIGHT}px`,
+                      height: `${virtualRow.size}px`,
                       transform: `translateY(${virtualRow.start}px)`,
                     }}
                     className={cn(
@@ -499,7 +496,7 @@ export const ScanEntries: React.FC<ScanEntriesProps> = ({
                   >
                     {item ? (
                       <>
-                        <TableCell
+                        <div
                           className="font-mono text-sm text-muted-foreground py-1 px-3 align-top overflow-hidden text-ellipsis"
                           title={item.key}
                           style={{
@@ -508,33 +505,32 @@ export const ScanEntries: React.FC<ScanEntriesProps> = ({
                           }}
                         >
                           {item.key}
-                        </TableCell>
-                        <TableCell
-                          className="font-mono text-sm py-1 px-3 align-top text-ellipsis overflow-hidden"
+                        </div>
+                        <div
+                          className="font-mono text-sm py-1 px-3 align-top text-ellipsis overflow-hidden whitespace-nowrap"
                           style={{
                             flex: `1 1 0`,
                           }}
                           title={item.value}
                         >
                           {item.value}
-                        </TableCell>
+                        </div>
                       </>
                     ) : (
                       // Placeholder for rows where data might still be loading (though less common with this RQ setup)
                       // or if an item is somehow null/undefined in allDisplayItems
-                      <TableCell
-                        colSpan={2}
+                      <div
                         className="text-xs text-muted-foreground/70 h-full text-center py-2.5 px-3"
                         style={{ height: `${ITEM_HEIGHT}px` }} // Give placeholder a height
                       >
                         &nbsp;
-                      </TableCell>
+                      </div>
                     )}
-                  </TableRow>
+                  </div>
                 )
               })}
-            </TableBody>
-          </Table>
+            </div>
+          </div>
         </div>
       </>
     )
