@@ -11,7 +11,6 @@ import { Download, EllipsisVertical, FileText, FileUp } from 'lucide-react'
 import { Trash } from 'lucide-react'
 import { toast } from 'sonner'
 import { useApplyJsonlMutation } from './treeOperations/hooks/useApplyJsonlMutation'
-import type { PTree } from 'prolly-gunna'
 import { Input } from './ui/input'
 import { useState, type FormEvent } from 'react'
 import { useRef, type ChangeEvent } from 'react'
@@ -28,7 +27,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from './ui/dialog'
-import { JsonlBatchArea } from './treeOperations/JsonlBatchArea'
 import { Textarea } from './ui/textarea'
 import { useDownloadScanMutation } from './treeOperations/hooks/useDownloadScanMutation'
 
@@ -149,7 +147,7 @@ export function TreeMenu({
       }
 
       return {
-        buffer: fileBytesU8.buffer,
+        buffer: fileBytesU8.buffer as ArrayBuffer,
         filename: treePath,
       }
     },

@@ -68,7 +68,7 @@ export const useDownloadScanMutation = ({
     onSuccess: (result) => {
       if (result) {
         triggerBrowserDownload(
-          result.data,
+          result.data as unknown as ArrayBuffer,
           result.filename,
           'application/jsonl',
         )

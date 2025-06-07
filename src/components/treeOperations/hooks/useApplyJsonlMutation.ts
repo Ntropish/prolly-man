@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useProllyStore } from '@/useProllyStore'
 import type { PTree } from 'prolly-gunna'
 import { toU8, u8ToHex } from '@/lib/prollyUtils'

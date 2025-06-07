@@ -46,8 +46,6 @@ export default function TreeManagement({
 
       <TabsContent value="config" className="border-t pt-4">
         <ProllyFilePanel
-          tree={treeState.tree}
-          treePath={treeState.path}
           treeConfig={treeState.treeConfig}
           rootHash={treeState.rootHash}
         />

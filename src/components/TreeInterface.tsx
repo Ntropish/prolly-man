@@ -1,45 +1,18 @@
-// src/components/TreeInterface.tsx
-import React from 'react'
-import { type PTree } from 'prolly-gunna'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from './ui/card'
-import { Button } from './ui/button'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs' // Added Tabs imports
-import { Loader2, FileDown, RefreshCw, Save, Trash } from 'lucide-react'
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
 
-// Removed OperationSection import as it's being replaced by Tabs
-import { BasicOpsComponent } from './treeOperations/BasicOps'
-// DataExplorerComponent was marked as .old, assuming it's not primary for this refactor
-// import { DataExplorerComponent } from "./treeOperations/DataExplorer.old";
-import { DiffComponent } from './treeOperations/Diff'
 import { ScanEntries } from './treeOperations/ScanEntries'
-import { VirtualizedHierarchyScan } from './treeOperations/VirtualizedHierarchyScan'
-import { JsonlBatchArea } from './treeOperations/JsonlBatchArea'
-import { JsonlFileLoaderComponent } from './treeOperations/JsonlFileLoader'
 
-import { useProllyStore, type ProllyTree } from '@/useProllyStore'
-import { GarbageCollectionComponent } from './treeOperations/GarbageCollection'
+import { type ProllyTree } from '@/useProllyStore'
 
-import { ProllyFilePanel } from './treeOperations/FilePanel'
 import TreeManagement from './tree-management'
 import { AddEntryDialog } from './treeOperations/AddEntryDialog'
-// import { RenameDialog } from "./treeOperations/RenameDialog";
 
 interface TreeInterfaceProps {
   treeState: ProllyTree
 }
 
 export function TreeInterface({ treeState }: TreeInterfaceProps) {
-  const handleSave = () => {
-    useProllyStore.getState().saveTree(treeState.path)
-  }
-
   // Define default active tab, e.g., "basic"
   const defaultTab = 'scan'
 
@@ -50,14 +23,8 @@ export function TreeInterface({ treeState }: TreeInterfaceProps) {
           <span className="px-2 py-1 rounded font-mono">
             {treeState.path.replace(/\.prly$/, '')}
           </span>
-          {/* <RenameDialog treeId={treeState.id} currentName={treeState.id} /> */}
           <span className="ml-2 flex gap-2 ml-auto">
             <AddEntryDialog tree={treeState} />
-            {/* {treeState.rootHash !== treeState.lastSavedRootHash && (
-              <Button size="icon" onClick={handleSave}>
-                <Save className="h-4 w-4" />
-              </Button>
-            )} */}
           </span>
         </CardTitle>
       </CardHeader>

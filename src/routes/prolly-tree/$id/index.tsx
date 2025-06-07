@@ -2,7 +2,6 @@ import { TreeInterface } from '@/components/TreeInterface'
 import { Toaster } from '@/components/ui/sonner'
 import { useProllyStore } from '@/useProllyStore'
 import { createFileRoute } from '@tanstack/react-router'
-import { TreeDeciduous } from 'lucide-react'
 
 export const Route = createFileRoute('/prolly-tree/$id/')({
   component: RouteComponent,

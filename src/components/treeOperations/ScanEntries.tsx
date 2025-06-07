@@ -14,8 +14,6 @@ import {
   ArrowRightToLine,
   MoveHorizontal,
   Download,
-  Copy,
-  Trash,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Input } from '@/components/ui/input'
@@ -29,16 +27,8 @@ import { getPrefixScanEndBound } from '@/lib/getPrefixScanEndBound'
 import { Tabs, TabsList, TabsTrigger } from '@radix-ui/react-tabs'
 import { useDownloadScanMutation } from './hooks/useDownloadScanMutation'
 
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
-} from '@/components/ui/table'
 import { cn } from '@/lib/utils'
-import { useProllyStore, type ProllyTree } from '@/useProllyStore'
+import { type ProllyTree } from '@/useProllyStore'
 import { EntryDialog } from './EntryDialog'
 // --- Interfaces ---
 interface Item {
@@ -110,7 +100,7 @@ export const ScanEntries: React.FC<ScanEntriesProps> = ({
   const [debouncedTrueStartInclusive] = useDebounce(trueStartInclusive, 500)
   const [debouncedTrueEndInclusive] = useDebounce(trueEndInclusive, 500)
 
-  const [keyColumnWidth, setKeyColumnWidth] = useState(KEY_COLUMN_WIDTH_PX)
+  const [keyColumnWidth] = useState(KEY_COLUMN_WIDTH_PX)
   const [openEntryDialogKey, setOpenEntryDialogKey] = useState<string | null>(
     null,
   )
@@ -232,14 +222,6 @@ export const ScanEntries: React.FC<ScanEntriesProps> = ({
 
   const virtualItems = rowVirtualizer.getVirtualItems()
 
-  // Calculate padding for the tbody to simulate the full scroll height
-  const paddingTop = virtualItems.length > 0 ? virtualItems[0].start : 0
-  const paddingBottom =
-    virtualItems.length > 0
-      ? rowVirtualizer.getTotalSize() -
-        virtualItems[virtualItems.length - 1].end
-      : 0
-
   useEffect(() => {
     if (virtualItems.length === 0 || !RqHasNextPage || isFetchingNextPage) {
       return
@@ -331,20 +313,6 @@ export const ScanEntries: React.FC<ScanEntriesProps> = ({
   }
   const handleRangeEndInclusiveChange = (checked: boolean) => {
     setTrueEndInclusive(checked)
-  }
-
-  const handleRowDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
-    // get closest parent with data-row-key attribute
-    const row = (event.target as HTMLElement).closest('[data-row-key]')
-    if (row) {
-      const rowKey = row.getAttribute('data-row-key')
-      console.log(rowKey)
-      if (rowKey) {
-        tree?.delete(toU8(rowKey))
-        toast.success('Item deleted successfully.')
-        useProllyStore.getState().treeUpdated(treePath)
-      }
-    }
   }
 
   const renderContent = () => {

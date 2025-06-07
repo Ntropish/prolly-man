@@ -5,10 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Loader2, Layers } from 'lucide-react'
 import { toast } from 'sonner'
-import { toU8 } from '@/lib/prollyUtils'
-import { u8ToHex } from '@/lib/prollyUtils'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useProllyStore } from '@/useProllyStore'
+
 import { useApplyJsonlMutation } from './hooks/useApplyJsonlMutation'
 
 interface JsonlBatchAreaProps {

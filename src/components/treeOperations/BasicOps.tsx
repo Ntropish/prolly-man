@@ -3,18 +3,12 @@ import React, { useState } from 'react'
 import { type PTree } from 'prolly-gunna'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Loader2, CheckCircle, Search, Trash2, FileDown } from 'lucide-react'
+import { Loader2, CheckCircle, Search, Trash2 } from 'lucide-react'
 
-import {
-  generateTreeFilename,
-  toU8,
-  triggerBrowserDownload,
-  u8ToString,
-} from '@/lib/prollyUtils'
+import { toU8, u8ToString } from '@/lib/prollyUtils'
 import { toast } from 'sonner'
 import { useProllyStore } from '@/useProllyStore'
 import { useMutation } from '@tanstack/react-query'
-import { Separator } from '@radix-ui/react-separator'
 
 interface BasicOpsProps {
   tree: PTree

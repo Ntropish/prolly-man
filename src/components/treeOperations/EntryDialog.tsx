@@ -6,17 +6,15 @@ import { Button } from '../ui/button'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '../ui/dialog'
 import { useEffect, useRef, useState } from 'react'
 import { Input } from '../ui/input'
 import { toU8, u8ToString } from '@/lib/prollyUtils'
 import { toast } from 'sonner'
-import { CirclePlus, Key } from 'lucide-react'
+import { Key } from 'lucide-react'
 import { Textarea } from '../ui/textarea'
 
 export interface EntryDialogProps {
@@ -112,7 +110,7 @@ export function EntryDialog({
     },
   })
 
-  const { mutate: deleteEntry, isPending: isDeleting } = useMutation({
+  const { mutate: deleteEntry } = useMutation({
     mutationFn: async (entry: { key: string }) => {
       await prly?.tree.delete(toU8(entry.key))
     },

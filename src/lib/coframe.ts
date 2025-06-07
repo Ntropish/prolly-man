@@ -2,7 +2,7 @@
 
 import { toU8 } from '@/lib/prollyUtils'
 import { Builder, ByteBuffer } from 'flatbuffers'
-import { PTree, type TreeConfigOptions } from 'prolly-gunna'
+import { PTree } from 'prolly-gunna'
 
 // The generic constraints now perfectly match the code flatc generates.
 type Unpackable<T_Plain> = { unpack(): T_Plain }

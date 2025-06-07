@@ -103,7 +103,6 @@ export function AppSidebar() {
             <Button
               asChild
               size="sm"
-              variant="outline"
               disabled={working === 'load'}
               variant="ghost"
               title="Import"

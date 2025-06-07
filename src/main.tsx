@@ -9,8 +9,6 @@ import { routeTree } from './routeTree.gen'
 
 import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
-import { AppSidebar } from './components/app-sidebar.tsx'
-import { SidebarProvider } from './old/src/components/ui/sidebar.tsx'
 import { ThemeProvider } from './components/theme-provider.tsx'
 
 // Create a new router instance

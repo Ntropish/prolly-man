@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { PTree, type TreeConfigOptions } from 'prolly-gunna'
 import { u8ToHex } from '@/lib/prollyUtils'
 import { produce } from 'immer'
-import { adjectives, colors } from 'unique-names-generator'
+import { adjectives } from 'unique-names-generator'
 import { uniqueNamesGenerator } from 'unique-names-generator'
 import { animals } from 'unique-names-generator'
 
@@ -48,6 +48,7 @@ async function* findPrlyFiles(
   void,
   unknown
 > {
+  // @ts-expect-error entries is not a method on FileSystemDirectoryHandle
   for await (const [name, handle] of dir.entries()) {
     if (handle.kind === 'file' && name.toLowerCase().endsWith('.prly')) {
       yield { name, handle }
@@ -229,6 +230,10 @@ export const useProllyStore = create<ProllyStoreState>()((set, get) => {
 
     // TODO: Implement
     renameTree: async (treePath: string, newName: string) => {
+      console.log({
+        treePath,
+        newName,
+      })
       throw new Error('Not implemented')
     },
 
