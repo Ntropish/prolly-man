@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/demo.tanstack-query-BIJgqkWJ.js","assets/useQuery-DU5p-XCB.js","assets/index-D-QEgqg1.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/demo.tanstack-query-DwX08JUj.js","assets/useQuery-CsAv4r85.js","assets/index-Dp_XNqgM.js"])))=>i.map(i=>d[i]);
 var __typeError = (msg) => {
   throw TypeError(msg);
 };
@@ -25840,35 +25840,35 @@ Length provided: ${this.length}. Number of dictionaries provided: ${this.diction
       return r().catch(u);
     });
   };
-  i4 = () => ps(() => import("./index-KqpXRaLv.js").then(async (m) => {
+  i4 = () => ps(() => import("./index-DcK5DFoh.js").then(async (m) => {
     await m.__tla;
     return m;
   }), []);
   lw = as("/")({
     component: os(i4, "component", () => lw.ssr)
   });
-  s4 = () => ps(() => import("./index-J5Hw_07Y.js").then(async (m) => {
+  s4 = () => ps(() => import("./index-BjUsTKn4.js").then(async (m) => {
     await m.__tla;
     return m;
   }), []);
   cw = as("/prolly-tree/")({
     component: os(s4, "component", () => cw.ssr)
   });
-  l4 = () => ps(() => import("./demo.tanstack-query-BIJgqkWJ.js").then(async (m) => {
+  l4 = () => ps(() => import("./demo.tanstack-query-DwX08JUj.js").then(async (m) => {
     await m.__tla;
     return m;
   }), __vite__mapDeps([0,1]));
   uw = as("/demo/tanstack-query")({
     component: os(l4, "component", () => uw.ssr)
   });
-  c4 = () => ps(() => import("./demo.table-X23AjSV_.js").then(async (m) => {
+  c4 = () => ps(() => import("./demo.table-eyluEuui.js").then(async (m) => {
     await m.__tla;
     return m;
   }), []);
   fw = as("/demo/table")({
     component: os(c4, "component", () => fw.ssr)
   });
-  u4 = () => ps(() => import("./index-D-QEgqg1.js").then(async (m) => {
+  u4 = () => ps(() => import("./index-Dp_XNqgM.js").then(async (m) => {
     await m.__tla;
     return m;
   }), __vite__mapDeps([2,1]));
@@ -25939,6 +25939,7 @@ Length provided: ${this.length}. Number of dictionaries provided: ${this.diction
     });
   }
   const w4 = q1({
+    basepath: "/prolly-man/",
     routeTree: v4,
     context: {
       ...yE()
